@@ -4,7 +4,7 @@
     flex-wrap: wrap;
     margin-left: 100px;
     padding: 20px;
-    margin-top: 60px;
+    margin-top: 30px;
     gap: 20px;
     flex: 1;
     
@@ -17,10 +17,22 @@
     padding: 30px;
     margin-left: 110px;
     margin-top: 60px;
-    width: 600px;
+    width: 90%;
     border-radius: 30px;
 }
+.status-post{
+    margin-top: 10px;
+    text-align: center;
+    font-weight: 900;
+    font-size: 20px;
+}
+.status-open {
+    color: green;
+}
 
+.status-closed {
+    color: red;
+}
 .card {
     flex: 0 0 auto;
     width: 250px;

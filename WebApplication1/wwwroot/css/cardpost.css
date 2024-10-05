@@ -20,13 +20,13 @@
 .button-createpost {
     padding: 10px 20px;
     background-color: white;
-    color: white;
+    color: rgb(0, 0, 0);
     text-decoration: none;
     border-radius: 5px;
 }
 
 .button-createpost:hover {
-    background-color: #0056b3;
+    background-color: #bcc5e4;
 }
 .card {
     width: 80%;
@@ -139,6 +139,7 @@
     border-top: 1px solid #ccc;
 }
 .card-comment form{
+    padding-left: 2%;
     width: 100%;
 }
 .card-comment input {
