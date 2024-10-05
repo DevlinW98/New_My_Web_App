@@ -28,11 +28,13 @@ namespace WebApplication1.Controllers
             var usernames = _db.User
                 .Where(u => userIds.Contains(u.Id))
                 .ToDictionary(u => u.Id, u => u.UserName);
+            
 
             var comment_PostIds = posts.Select(p => p.ID).Distinct().ToList();
             var comments = _db.Comments.Where(c => comment_PostIds.Contains(c.PostID)).ToList();
 
             ViewBag.Usernames = usernames;
+            
             ViewBag.Id = userId;
             ViewBag.Comments = comments;
 
@@ -62,12 +64,19 @@ namespace WebApplication1.Controllers
                 .Where(u => userIds.Contains(u.Id))
                 .ToDictionaryAsync(u => u.Id, u => u.UserName ?? "Unknown User");
             
+            var user_Image_Url = _db.User
+                .Where(u => userIds.Contains(u.Id))
+                .ToDictionary(u => u.Id, u => u.User_Image_Url);
+
+                
+            
             var model = Tuple.Create(joinEvents);
 
             if (post_in_user.Post_by_id != userId){
                 return RedirectToAction("Index", "Post");
             }
 
+            ViewBag.user_Image_Url = user_Image_Url;
             ViewBag.Usernames = usernames;
             ViewBag.post = post_in_user;
             return View(model);
@@ -232,15 +241,15 @@ namespace WebApplication1.Controllers
             {   
                 if (string.IsNullOrEmpty(obj.Post_img) && obj.Location == "Luck and Roll")
                 {
-                    obj.Post_img = "https://flowbite.com/docs/images/examples/image-1@2x.jpg";
+                    obj.Post_img = "https://img5.pic.in.th/file/secure-sv1/1710cbac47d36f599.png";
                 }
                 else if (string.IsNullOrEmpty(obj.Post_img) && obj.Location == "KUMO cafe & board game")
                 {
-                    obj.Post_img = "https://flowbite.com/docs/images/examples/image-1@2x.jpg";
+                    obj.Post_img = "https://img2.pic.in.th/pic/2f741cbb21105026a.png";
                 }
                 else if (string.IsNullOrEmpty(obj.Post_img) && obj.Location == "KMITL Lifelong Learning Center")
                 {
-                    obj.Post_img = "https://flowbite.com/docs/images/examples/image-1@2x.jpg";
+                    obj.Post_img = "https://img2.pic.in.th/pic/335969a6c86f34954.png";
                 }
                 
                 obj.Post_Detail ??= "";
