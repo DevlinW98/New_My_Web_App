@@ -111,7 +111,7 @@
             <a href="#popup-@post.ID" class="card-link">
                 <img src="@post.Post_img" alt="Board game image">
                 <h3 class="Location">@post.Post_name</h3>
-                <h3 class="user">@ViewBag.Usernames[post.Post_by_id] ?? "Unknown User"</h3>
+                <h3>Post user : @(ViewBag.Usernames.ContainsKey(post.Post_by_id) ? ViewBag.Usernames[post.Post_by_id] : "Unknown User")</h3>
                 <p>Date : @post.Date</p>
                 <p>Amount : @post.Participants / @post.Capacity</p>
             </a>
@@ -128,7 +128,7 @@
                     </div>
                     <div class="pop-details">
                         <h2>Post Name: @post.Post_name</h2>
-                        <h3>Post user: @ViewBag.Usernames[post.Post_by_id] ?? "Unknown User"</h3>
+                        <h3>Post user : @(ViewBag.Usernames.ContainsKey(post.Post_by_id) ? ViewBag.Usernames[post.Post_by_id] : "Unknown User")</h3>
                         <p>Location: @post.Location</p>
                         <p>Date: @post.Date</p>
                         <p>Amount: @post.Participants / @post.Capacity</p>
