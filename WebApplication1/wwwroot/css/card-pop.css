@@ -41,8 +41,8 @@
     border-radius: 30px;
     padding: 10px;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow behind the card */
-    background-color: #fff;  /* #bec9e7 #6373b7 #ebe4f2*/
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
@@ -168,6 +168,10 @@ a.card-link {
     flex-direction: row;
     align-items: flex-end;
     gap: 10Px;
+}
+.buttnozone form{ 
+    margin-left: 80%;
+    width: 55px;
 }
 .view-button {
     width: 90%;
