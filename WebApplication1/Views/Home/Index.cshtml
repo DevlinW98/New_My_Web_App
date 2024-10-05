@@ -2,6 +2,7 @@
 
 @section Styles {
     <link rel="stylesheet" href="~/css/card-pop.css" />
+    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 }
 
 @{
@@ -12,133 +13,112 @@
 @section Scripts {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             // Function to handle request join via Ajax
-            $('.request-join').on('click', function() {
+            $('.request-join').on('click', function () {
                 var postId = $(this).data('post-id');
-                
+
                 $.ajax({
                     type: 'POST',
                     url: '/Home/RequestJoin',
                     data: { postId: postId },
-                    success: function(response) {
+                    success: function (response) {
                         if (response.success) {
                             alert(response.message);
-                            // Disable the button or change its state after successful request
                             $('.request-join[data-post-id="' + postId + '"]').prop('disabled', true).text('Request Sent');
                         } else {
                             alert(response.message || 'Something went wrong.');
                         }
                     },
-                    error: function(xhr) {
+                    error: function (xhr) {
                         console.error(xhr.responseText);
                         alert("An error occurred while sending your request.");
                     }
                 });
             });
-        });
-        $(document).ready(function() {
-            setInterval(function() {
-                $('.showcomment').each(function() {
+
+            // Auto-refresh comments for all posts
+            setInterval(function () {
+                $('.showcomment').each(function () {
                     var postId = $(this).data('post-id');
                     refreshComments(postId);
                 });
-            }, 5000); 
+            }, 5000);
         });
     </script>
-   
+
     <script>
-         /*SlideShow ???*/
-         let slideIndex = 1;
+    // SlideShow Functionality
+    let slideIndex = 1;
     displaySlide(slideIndex);
- 
+
+    // Automatic slide every 3 seconds
+    setInterval(function() {
+        moveSlides(1); // Move to the next slide
+    }, 3000); // 3000 milliseconds = 3 seconds
+
     function moveSlides(n) {
         displaySlide(slideIndex += n);
     }
- 
+
     function activeSlide(n) {
         displaySlide(slideIndex = n);
     }
- 
-    /* Main function */
-    function displaySlide(n) {
-        let i;
-        let totalslides =
-            document.getElementsByClassName("slide");
-        let totaldots =
-            document.getElementsByClassName("footerdot");
- 
-        if (n > totalslides.length) {
-            slideIndex = 1;
-        }
- 
-        if (n < 1) {
-            slideIndex = totalslides.length;
-        }
-        for (i = 0; i < totalslides.length; i++) {
-            totalslides[i].style.display = "none";
-        }
-        for (i = 0; i < totaldots.length; i++) {
-            totaldots[i].className =
-                totaldots[i].className.replace(" active", "");
-        }
-        totalslides[slideIndex - 1].style.display = "block";
-        totaldots[slideIndex - 1].className += " active";
-    }
-    </script>
-}
 
-<!-- Image container of the image slider -->
-    <div class="image-container">
-        <div class="slide">
-            <div class="slideNumber">1</div>
-            <img src=
-"https://www.geeksforgeeks.org/wp-content/uploads/html-768x256.png">
-        </div>
-        <div class="slide">
-            <div class="slideNumber">2</div>
-            <img src=
-"https://www.geeksforgeeks.org/wp-content/uploads/CSS-768x256.png">
-        </div>
-        <div class="slide">
-            <div class="slideNumber">3</div>
-            <img src=
-"https://www.geeksforgeeks.org/wp-content/uploads/jquery-banner.png">
-        </div>
- 
-        <!-- Next and Previous icon to change images -->
-        <a class="previous" onclick="moveSlides(-1)">
-            <i class="fa fa-chevron-circle-left"></i>
-        </a>
-        <a class="next" onclick="moveSlides(1)">
-            <i class="fa fa-chevron-circle-right"></i>
-        </a>
+    function displaySlide(n) {
+        let totalslides = document.getElementsByClassName("slide");
+
+        if (n > totalslides.length) slideIndex = 1;
+        if (n < 1) slideIndex = totalslides.length;
+
+        for (let i = 0; i < totalslides.length; i++) {
+            totalslides[i].style.display = "none"; // Hide all slides
+        }
+
+        totalslides[slideIndex - 1].style.display = "block"; // Show the current slide
+    }
+</script>
+
+}
+<div class="image-container">
+    <div class="slide" style="display: block;"> <!-- Display the first slide -->
+        <img src="~/img/showgame2.jpg" alt="HTML Image">
     </div>
-    <br>
- 
-    <div style="text-align:center">
-        <span class="footerdot" onclick="activeSlide(1)">
-        </span>
-        <span class="footerdot" onclick="activeSlide(2)">
-        </span>
-        <span class="footerdot" onclick="activeSlide(3)">
-        </span>
+    <div class="slide" style="display: none;"> <!-- Initially hidden -->
+        <img src="~/img/showgame1.jpg" alt="CSS Image">
     </div>
+     <div class="slide" style="display: none;"> <!-- Initially hidden -->
+        <img src="~/img/showgame4.jpg" alt="jQuery Image">
+    </div>
+     <div class="slide" style="display: none;"> <!-- Initially hidden -->
+        <img src="~/img/showgame3.jpg" alt="jQuery Image">
+    </div>
+    <div class="slide" style="display: none;"> <!-- Initially hidden -->
+        <img src="~/img/showgame5.jpg" alt="jQuery Image">
+    </div>
+
+    <!-- Navigation arrows -->
+    <a class="previous" onclick="moveSlides(-1)">   
+    </a>
+    <a class="next" onclick="moveSlides(1)">
+    </a>
 </div>
 
 <div class="content">
+
     @foreach (var post in Model.Where(p => p.Date > DateTime.Now && p.Status == "Open")) {
         <div class="card">
             <a href="#popup-@post.ID" class="card-link">
                 <img src="@post.Post_img" alt="Board game image">
                 <h3 class="Location">@post.Post_name</h3>
-                <h3 class="user">@(ViewBag.Usernames.ContainsKey(post.Post_by_id) ? ViewBag.Usernames[post.Post_by_id] : "Unknown User")</h3>
+                <h3 class="user">@ViewBag.Usernames[post.Post_by_id] ?? "Unknown User"</h3>
                 <p>Date : @post.Date</p>
                 <p>Amount : @post.Participants / @post.Capacity</p>
             </a>
             <a class="button" href="#popup-@post.ID">Let me Pop up</a>
         </div>
-          
+
+        <!-- Popup content -->
         <div id="popup-@post.ID" class="overlay">
             <div class="popup">
                 <a class="close" href="#">&times;</a>
@@ -148,19 +128,22 @@
                     </div>
                     <div class="pop-details">
                         <h2>Post Name: @post.Post_name</h2>
-                        <h3>Post user : @(ViewBag.Usernames.ContainsKey(post.Post_by_id) ? ViewBag.Usernames[post.Post_by_id] : "Unknown User")</h3>
-                        <p>Location : @post.Location</p>
-                        <p>Date : @post.Date</p> 
-                        <p>Amount : @post.Participants / @post.Capacity</p>
+                        <h3>Post user: @ViewBag.Usernames[post.Post_by_id] ?? "Unknown User"</h3>
+                        <p>Location: @post.Location</p>
+                        <p>Date: @post.Date</p>
+                        <p>Amount: @post.Participants / @post.Capacity</p>
                         <p>@post.Post_Detail</p>
                     </div>
 
-                    @if(Id == post.Post_by_id){
+                    @if (Id == post.Post_by_id)
+                    {
                         <div class="buttnozone">
                             <a asp-controller="Post" asp-action="Edit" asp-route-id="@post.ID" class="view-button">Edit</a>
                             <a asp-controller="Post" asp-action="Manage_Participants" asp-route-id="@post.ID" class="view-button">Manage</a>
                         </div>
-                    }else{
+                    }
+                    else
+                    {
                         <div class="buttnozone">
                             <button class="view-button request-join" data-post-id="@post.ID">Request</button>
                         </div>
@@ -169,4 +152,6 @@
             </div>
         </div>
     }
-    
+
+
+</div>
