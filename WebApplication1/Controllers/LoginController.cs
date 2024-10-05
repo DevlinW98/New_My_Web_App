@@ -62,11 +62,14 @@ namespace WebApplication1.Controllers
 
                 List<string> items = new List<string> 
                 { 
-                    "Apple",
-                    "Banana",
-                    "Orange",
-                    "Mango",
-                    "Grapes" 
+                    "https://img2.pic.in.th/pic/11efd141fe89bd1982.png",
+                    "https://img2.pic.in.th/pic/22ea893238db82eeed.png",
+                    "https://img5.pic.in.th/file/secure-sv1/3357cec7fd7d01f25f.png",
+                    "https://img2.pic.in.th/pic/447a878b979614d151.png",
+                    "https://img5.pic.in.th/file/secure-sv1/55395bcc72f4abe112.png",
+                    "https://img5.pic.in.th/file/secure-sv1/66a43be3ea6ecc74c8.png",
+                    "https://img2.pic.in.th/pic/88b2654adefc96e522.png",
+                    "https://img5.pic.in.th/file/secure-sv1/99fabb6c8f1c876281.png"
                 };
                 Random random = new Random();
                 int index = random.Next(items.Count);

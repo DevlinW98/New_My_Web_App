@@ -19,7 +19,7 @@
 
 /* สไตล์ปุ่ม */
 .btn {
-    background-color: #007bff;
+    background-color: #6373b7;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -31,19 +31,24 @@
     justify-content: center; /* จัดข้อความให้อยู่ตรงกลางแนวนอน */
     align-items: center; /* จัดข้อความให้อยู่ตรงกลางแนวตั้ง */
     text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .btn.secondary-btn {
     background-color: #6c757d;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* เปลี่ยนสีปุ่มเมื่อ hover */
 .btn:hover {
-    background-color: #0056b3;
+    background-color: #ebe4f2;
+    color: #000;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .secondary-btn:hover {
     background-color: #5a6268;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* สไตล์ฟอร์ม */

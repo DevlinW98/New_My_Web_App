@@ -11,6 +11,7 @@
 <h2>In Party </h2>
 </div>
 
+
 <div class="status-sone"> 
   <p class="status-post">Status :</p>
   <p class="status-post @(ViewBag.post.Status == "Open" ? "status-open" : "status-closed")">
@@ -34,7 +35,7 @@
      {
         @if(joinEvent.Status == "Approve"){          
           <div class="card">
-            <img src="https://via.placeholder.com/150" alt="User Avatar">
+            <img src="@(ViewBag.user_Image_Url.ContainsKey(joinEvent.UserID) ? ViewBag.user_Image_Url[joinEvent.UserID] : "/path/to/default-avatar.png")" alt="User Avatar">
             <h3>@(ViewBag.Usernames.ContainsKey(joinEvent.UserID) ? ViewBag.Usernames[joinEvent.UserID] : "Unknown User")</h3>
             @if(ViewBag.userId != joinEvent.UserID){
                 <p>Status: @joinEvent.Status</p>
@@ -62,7 +63,7 @@
         
         @if(joinEvent.Status == "Request"){          
           <div class="card">
-            <img src="https://via.placeholder.com/150" alt="User Avatar">
+            <img src="@(ViewBag.user_Image_Url.ContainsKey(joinEvent.UserID) ? ViewBag.user_Image_Url[joinEvent.UserID] : "/path/to/default-avatar.png")" alt="User Avatar">
             <h3>@(ViewBag.Usernames.ContainsKey(joinEvent.UserID) ? ViewBag.Usernames[joinEvent.UserID] : "Unknown User")</h3>
             <p>Status: @joinEvent.Status</p>
             <form asp-controller="Post" asp-action="Approve" method="post">

@@ -49,19 +49,23 @@ namespace WebApplication1.Controllers
             var user = _db.User.FirstOrDefault(p => p.Id == userId);
             if (user == null)
             {
-                return NotFound(); // Return 404 if user not found
+                return NotFound();
             }
-                
-            
+
             // อัปเดตข้อมูลผู้ใช้โดยไม่ต้องตรวจสอบรหัสผ่าน
+            user.User_Image_Url = obj.User_Image_Url;  // เปลี่ยนชื่อให้ตรงกับโมเดล
             user.UserName = obj.UserName;
             user.Age = obj.Age;
             user.Email = obj.Email;
-            user.Description = obj.Description;
+            if (obj.Description != null){
+                user.Description = obj.Description;
+            }
             _db.SaveChanges();
-            HttpContext.Session.SetString("UserName", obj.UserName);                
+
+            HttpContext.Session.SetString("UserName", obj.UserName);
             return RedirectToAction("Index");
         }
+
             
             
         }
