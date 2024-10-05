@@ -1,4 +1,8 @@
-﻿.profile-container {
+﻿body, h1, h2, h3, p {
+    font-family: "Mukta", sans-serif; /* ใช้ Mukta สำหรับทั้งเอกสาร */
+}
+
+.profile-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -26,6 +30,8 @@
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
     width: 400px; /* ความกว้างเท่ากัน */
+    border: 5px solid #6373b7;
+    font-family: "Mukta", sans-serif; /* ใช้ Mukta สำหรับทั้งเอกสาร */
 }
 
 .field {

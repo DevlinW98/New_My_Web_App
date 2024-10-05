@@ -320,9 +320,11 @@ namespace WebApplication1.Controllers
             {
                 return NotFound();
             }
+            ViewBag.UserName = HttpContext.Session.GetString("UserName");
+            ViewBag.UserStatus = HttpContext.Session.GetString("Status");
             return View(post);
         }
-
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Post post)

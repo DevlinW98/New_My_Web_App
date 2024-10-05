@@ -44,6 +44,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     background-color: #fff;
     transition: transform 0.3s, box-shadow 0.3s;
+    font-family: "Mukta", sans-serif; /* ใช้ Mukta ใน card */
 }
 
 a.card-link {
@@ -103,7 +104,8 @@ a.card-link {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.button:hover {background-color: #ebe4f2;
+.button:hover {
+    background-color: #ebe4f2;
     color: #000;
 }
 
@@ -155,7 +157,7 @@ a.card-link {
     text-decoration: none;
     color: #333;
     z-index: 1000;
-  }
+}
 .popup .close:hover {
     color: #6373b7;
 }
@@ -289,3 +291,12 @@ a.card-link {
     padding: 10px 0;
 }
 
+.mukta-light {
+    font-family: "Mukta", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+}
+
+body, h1, h2, h3, p {
+    font-family: "Mukta", sans-serif; /* ใช้ Mukta สำหรับทั้งเอกสาร */
+}
