@@ -13,7 +13,11 @@
 
 
 <div class="content">
-  <h3>Status : @ViewBag.post.Status</h3>
+
+  <p class="status-post">Status :</p>
+  <p class="status-post @(ViewBag.post.Status == "Open" ? "status-open" : "status-closed")">
+       @ViewBag.post.Status
+  </p>
   @if(ViewBag.post.Status == "Open"){
     <form asp-controller="Post" asp-action="Close_Status" method="post">
         <input type="hidden" name="id" value="@ViewBag.post.ID" />
