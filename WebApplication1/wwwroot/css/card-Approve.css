@@ -4,12 +4,18 @@
     flex-wrap: wrap;
     margin-left: 100px;
     padding: 20px;
-    margin-top: 30px;
+    margin-top: 40px;
     gap: 20px;
     flex: 1;
     
 }
-
+.status-sone{
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 100px;
+    padding: 20px;
+    margin-bottom: 7%;
+}
 .request01{
     background-color: #6373b7;
     color: #fff;
