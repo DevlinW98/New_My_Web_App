@@ -9,7 +9,7 @@
     flex: 1;
     
 }
-.status-sone{
+.status-sone{ 
     display: flex;
     justify-content: flex-start;
     margin-left: 100px;
