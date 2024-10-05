@@ -16,7 +16,6 @@
 {
 @if(Id == post.Post_by_id){
   <div class="card">
-    <a asp-controller="Post" asp-action="Delete_Post" asp-route-id="@post.ID" class="close-button" >&times;</a>
         <div class="card-content">
             <div class="card-image">
               <img src="@post.Post_img" alt="Image">
@@ -31,6 +30,7 @@
 
             </div>
             <div class="buttnozone">
+                <a asp-controller="Post" asp-action="Delete_Post" asp-route-id="@post.ID" class="close-button" >&times;</a>
                 <a asp-controller="Post" asp-action="Edit" asp-route-id="@post.ID" class="content-button">Edit</a>
                 @* <a asp-controller="Post" asp-action="GetPostById" asp-route-id="@post.ID" class="content-button">view</a> *@
                 <a asp-controller="Post" asp-action="Manage_Participants" asp-route-id="@post.ID" class="content-button">Manage</a>

@@ -235,14 +235,14 @@ a.card-link {
 .pop-comment button {
     padding: 8px 12px;
     border: none;
-    background-color: #007bff;
+    background-color: #6373b7;
     color: white;
     border-radius: 4px;
     cursor: pointer;
 }
 
 .pop-comment button:hover {
-    background-color: #0056b3;
+    background-color: #6373b7;
 }
 
 @media (max-width: 1470px) {
