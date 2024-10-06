@@ -7,8 +7,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: calc(100vh - 50px);
+    height: calc(100vh - 100px);
     margin-top: 50px;
+    padding-top: 400px; /* เพิ่ม padding บนเพื่อลดการติดกับ navbar */
+    padding-bottom: 400px; /* เพิ่ม padding ด้านล่างเพื่อเว้นระยะห่างจาก footer */
 }
 
 .profile-container img {
@@ -26,8 +28,8 @@
 .profile-edit {
     background-color: white;
     padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;    
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);    
     text-align: center;
     width: 400px; /* ความกว้างเท่ากัน */
     border: 5px solid #6373b7;
@@ -74,9 +76,11 @@ button {
     font-size: 16px;
     border-radius: 30px;
     margin-top: 10px;
+    margin-bottom: 10px; /* เพิ่ม margin ด้านล่างสำหรับเว้นระยะ */
     cursor: pointer;
 }
 
 .buttonzone a.button.cancel {
     background-color: gray;
 }
+
