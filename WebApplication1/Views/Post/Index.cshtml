@@ -1,6 +1,9 @@
 @model IEnumerable<WebApplication1.Models.Post>
 @section Styles {
     <link rel="stylesheet" href="~/css/cardpost.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
 }
 @{
     var Id = ViewBag.Id;
@@ -10,7 +13,7 @@
 <div class="content">
 @* card คนโพส *@
     <div class="createpos">
-    <a asp-controller="Post" asp-action="CreatePost" class="button-createpost">POST</a>
+    <a asp-controller="Post" asp-action="CreatePost" class="button-createpost">Post</a>
     </div>
 @foreach (var post in Model)
 {

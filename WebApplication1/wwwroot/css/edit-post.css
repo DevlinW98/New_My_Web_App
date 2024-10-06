@@ -9,12 +9,14 @@
 
 /* สร้างการ์ดที่มีมุมโค้งมน */
 .form-card {
-    background-color: #c0c4e4;
+    border: 5px solid #6373b7;
+    background-color: white;
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 600px;
     width: 100%;
+    font-family: "Mukta", sans-serif; /* ใช้ Mukta สำหรับการ์ดทั้งหมด */
 }
 
 /* สไตล์ปุ่ม */
@@ -32,6 +34,7 @@
     align-items: center; /* จัดข้อความให้อยู่ตรงกลางแนวตั้ง */
     text-align: center;
     transition: background-color 0.3s ease, color 0.3s ease;
+    font-family: "Mukta", sans-serif; /* ใช้ Mukta สำหรับปุ่ม */
 }
 
 .btn.secondary-btn {
@@ -63,8 +66,14 @@
     border-radius: 5px;
     border: 1px solid #ced4da;
     box-sizing: border-box;
+    font-family: "Mukta", sans-serif; /* ใช้ Mukta สำหรับ input และ textarea */
 }
 
 .text-danger {
     color: red;
+}
+
+/* ใช้ Mukta สำหรับทั้งเอกสาร */
+body, h1, h2, h3, p {
+    font-family: "Mukta", sans-serif; 
 }
