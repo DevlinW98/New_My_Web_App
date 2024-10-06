@@ -16,7 +16,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
-            // Function to handle request join via Ajax
             $('.request-join').on('click', function() {
                 var postId = $(this).data('post-id');
                 
@@ -41,13 +40,11 @@
             });
         });
         $(document).ready(function() {
-            // Function to scroll to bottom of comments
             function scrollToBottomOfComments(postId) {
                 var commentSection = $('.showcomment[data-post-id="' + postId + '"]');
                 commentSection.scrollTop(commentSection[0].scrollHeight);
             }
 
-            // Scroll to bottom of comments on page load
             $('.showcomment').each(function() {
                 var postId = $(this).data('post-id');
                 scrollToBottomOfComments(postId);
@@ -100,14 +97,13 @@
                 });
             });
 
-            // Function to refresh comments for all users
             function refreshComments(postId) {
                 $.ajax({
                     type: 'GET',
-                    url: `/Home/GetComments/${postId}`,  // Create a new action to get comments
+                    url: `/Home/GetComments/${postId}`,  
                     success: function(data) {
                         var commentSection = $('.showcomment[data-post-id="' + postId + '"]');
-                        commentSection.html(data);  // Replace comments section with updated data
+                        commentSection.html(data);  
                     },
                     error: function(xhr) {
                         console.error("Error refreshing comments:", xhr.responseText);
@@ -115,13 +111,12 @@
                 });
             }
 
-            // Set interval to automatically refresh comments every 5 seconds
             setInterval(function() {
                 $('.showcomment').each(function() {
                     var postId = $(this).data('post-id');
                     refreshComments(postId);
                 });
-            }, 5000);  // Adjust the interval as needed
+            }, 5000);  
         });
 
     </script>
@@ -193,7 +188,7 @@
                     </div>
 
                     <div class="pop-comment">
-                        <form method="post" asp-controller="Home" asp-action="CreateComment" data-post-id="@post.ID">
+                        <form method="post" asp-controller="Community" asp-action="CreateComment" data-post-id="@post.ID">
                             <input type="text" name="CommentText" placeholder="Leave a comment..." >
                             <button type="submit">Submit</button>
                         </form>
