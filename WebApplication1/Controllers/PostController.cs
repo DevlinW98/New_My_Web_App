@@ -369,6 +369,67 @@ namespace WebApplication1.Controllers
 
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public IActionResult CreateComment(string CommentText, int? id)
+        {
+            int? userId = HttpContext.Session.GetInt32("ID");
+            Console.WriteLine($"User ID: {userId}");
+            Console.WriteLine("Received Post ID: " + id);
+
+
+            if (id == null || userId == null)
+            {
+                return Json(new { success = false, message = "Post ID or User ID is missing." ,id,userId});
+            }
+
+            if (string.IsNullOrWhiteSpace(CommentText))
+            {
+                return Json(new { success = false, message = "Comment text is required." });
+            }
+
+            int maxCommentId = _db.Comments.Any() ? _db.Comments.Max(c => c.CommentID) : 0;
+
+            Comment obj = new Comment
+            {
+                PostID = id.Value,
+                UserID = userId.Value,
+                CommentText = CommentText,
+                CreatedAt = DateTime.Now
+            };
+
+            _db.Comments.Add(obj);
+            _db.SaveChanges();
+
+            var user = _db.User.FirstOrDefault(u => u.Id == userId);
+            string username = user != null ? user.UserName : "Unknown User";
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult GetComments(int id)
+        {
+            var comments = _db.Comments
+                .AsNoTracking()
+                .Where(c => c.PostID == id)
+                .OrderBy(c => c.CreatedAt)
+                .Select(c => new Comment
+                {
+                    CommentID = c.CommentID,
+                    CommentText = c.CommentText ?? string.Empty,
+                    CreatedAt = c.CreatedAt,
+                    PostID = c.PostID,
+                    UserID = c.UserID
+                })
+                .ToList();
+
+            var usernames = _db.User
+                .AsNoTracking()
+                .Where(u => comments.Select(c => c.UserID).Contains(u.Id))
+                .ToDictionary(u => u.Id, u => u.UserName ?? "Unknown User");
+
+            ViewBag.Usernames = usernames;
+            return PartialView("_CommentsPartial", comments);  // Create a partial view for comments
+        }
         
     }
 }

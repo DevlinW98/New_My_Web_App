@@ -57,9 +57,23 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Register(User obj)
         {
+            // Check if the model state is valid
+            if (!ModelState.IsValid)
+            {
+                return View(obj); // Return to the view with the current model state
+            }
+
             try
             {
+                // Check for an existing user
+                var user = _db.User.FirstOrDefault(u => u.UserName == obj.UserName);
+                if (user != null)
+                {
+                    ModelState.AddModelError("UserName", "Username is already taken.");
+                    return View(obj); // Return to the view with the current model state
+                }
 
+                // Assign a random user image
                 List<string> items = new List<string> 
                 { 
                     "https://img2.pic.in.th/pic/11efd141fe89bd1982.png",
@@ -71,11 +85,13 @@ namespace WebApplication1.Controllers
                     "https://img2.pic.in.th/pic/88b2654adefc96e522.png",
                     "https://img5.pic.in.th/file/secure-sv1/99fabb6c8f1c876281.png"
                 };
+
                 Random random = new Random();
                 int index = random.Next(items.Count);
-                string randomItem = items[index];
-                obj.User_Image_Url = randomItem;
-                _db.User.Add(obj); 
+                obj.User_Image_Url = items[index];
+
+                // Add the new user
+                _db.User.Add(obj);
                 _db.SaveChanges();
             }
             catch (Exception ex)
@@ -84,8 +100,9 @@ namespace WebApplication1.Controllers
                 return View("Error", ex.Message);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index"); // Adjust this to your desired post-registration action
         }
+
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("Status");

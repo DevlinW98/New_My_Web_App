@@ -19,6 +19,17 @@
                     <div class="input-group">
                         <input type="password" id="password" asp-for="Password" placeholder="Password" required>
                     </div>
+                     @if (!ViewData.ModelState.IsValid) // แสดงข้อความ error ถ้ามี
+                        {
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                    {
+                                        <li>@error.ErrorMessage</li>
+                                    }
+                                </ul>
+                            </div>
+                        }
                     <button type="submit" class="btn-submit">Register</button>
                 </form>
             </div>

@@ -53,11 +53,10 @@
                     }
                 </div>
         <div class="card-comment">
-            @* <input type="text" placeholder="Leave a comment...">
-            <button type="button">Submit</button> *@
-            <form method="post" asp-controller="Home" asp-action="CreateComment" data-post-id="@post.ID">
-                    <input type="text" name="CommentText" placeholder="Leave a comment..." >
-                    <button type="Submit">Submit</button>
+            <form method="post" asp-controller="Post" asp-action="CreateComment" data-post-id="@post.ID">
+                <input type="hidden" name="id" value="@post.ID" />
+                <input type="text" name="CommentText" placeholder="Leave a comment..." required>
+                <button type="submit">Submit</button>
             </form>
         </div>
   </div>

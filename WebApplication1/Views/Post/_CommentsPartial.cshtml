@@ -1,0 +1,9 @@
+@model IEnumerable<WebApplication1.Models.Comment>
+
+@foreach (var comment in Model)
+{
+    <div class="comment-post">
+        <p class="comment-user">@(ViewBag.Usernames.ContainsKey(comment.UserID) ? ViewBag.Usernames[comment.UserID] : "Unknown User") :</p>
+        <p class="comment-description">@comment.CommentText</p>
+    </div>
+}
