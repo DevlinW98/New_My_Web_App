@@ -19,9 +19,9 @@ namespace WebApplication1.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.UserStatus = HttpContext.Session.GetString("Status");
             int? userId = HttpContext.Session.GetInt32("ID");
             ViewBag.UserName = HttpContext.Session.GetString("UserName");
+            ViewBag.UserStatus = HttpContext.Session.GetString("Status");
 
             var posts = _db.Post.ToList();
             var userIds = posts.Select(p => p.Post_by_id).Distinct().ToList();
@@ -222,6 +222,8 @@ namespace WebApplication1.Controllers
 
         public IActionResult CreatePost()
         {
+            ViewBag.UserName = HttpContext.Session.GetString("UserName");
+            ViewBag.UserStatus = HttpContext.Session.GetString("Status");
             int? userId = HttpContext.Session.GetInt32("ID");
 
             if (userId == null)
@@ -236,6 +238,8 @@ namespace WebApplication1.Controllers
         public IActionResult CreatePost(Post obj)
         {
             int? userId = HttpContext.Session.GetInt32("ID");
+            ViewBag.UserName = HttpContext.Session.GetString("UserName");
+            ViewBag.UserStatus = HttpContext.Session.GetString("Status");
 
             if (userId.HasValue)
             {   
@@ -249,7 +253,7 @@ namespace WebApplication1.Controllers
                 }
                 else if (string.IsNullOrEmpty(obj.Post_img) && obj.Location == "KMITL Lifelong Learning Center")
                 {
-                    obj.Post_img = "https://img2.pic.in.th/pic/335969a6c86f34954.png";
+                    obj.Post_img = "https://scontent.fbkk6-1.fna.fbcdn.net/v/t39.30808-6/312563861_202121498842408_5468716625227351501_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeE52MCz87Ric4ck8cUaSKZRQXmP9b57uSZBeY_1vnu5Jvr_rtQvlG60eVutMy4dbFCqY7pIa1ypBuHjVhm9jNbQ&_nc_ohc=449568RqaxgQ7kNvgGeE0zF&_nc_ht=scontent.fbkk6-1.fna&_nc_gid=Apys6uHNKTeub3zJNn7Pp5e&oh=00_AYBkFgso3nG-xukbRGpFS3TrN35IiDiPu42OcHjYo7QGyw&oe=67090B99";
                 }
                 
                 obj.Post_Detail ??= "";
@@ -315,6 +319,8 @@ namespace WebApplication1.Controllers
         public IActionResult Edit(int id)
         {
             int? userId = HttpContext.Session.GetInt32("ID");
+            ViewBag.UserName = HttpContext.Session.GetString("UserName");
+            ViewBag.UserStatus = HttpContext.Session.GetString("Status");
             var post = _db.Post.FirstOrDefault(p => p.ID == id && p.Post_by_id == userId);
             if (post == null)
             {

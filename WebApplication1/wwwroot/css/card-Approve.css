@@ -5,7 +5,7 @@
     margin-left: 100px;
     margin-right: 100px;
     padding: 20px;
-    margin-top: 40px;
+    margin-top: 30px;
     gap: 20px;
     flex: 1;
     
@@ -16,8 +16,8 @@
     
     margin: auto;
     margin-left: 100px;
-    padding: 20px;
-    margin-bottom: 50px;
+    padding: 10px;
+    margin-top: 1%;
 }
 .request01{
     background-color: #6373b7;

@@ -275,10 +275,17 @@ a.card-link {
     .content {
         justify-content: center;
     }
+    .image-container{
+        width: 80% ;
+        left: 17%;
+    }
 }
 @media (max-width: 768px) {
     .content {
         margin-left: auto;
+    }
+    .image-container{
+        left: 10%;
     }
 }
 
