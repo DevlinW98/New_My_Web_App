@@ -50,6 +50,7 @@
 }
 
 .close-button {
+    text-decoration: none;
     position: absolute;
     bottom: 125px;
     left: 250px;
