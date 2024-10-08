@@ -13,114 +13,126 @@
 }
 
 @section Scripts {
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('.request-join').on('click', function() {
-                var postId = $(this).data('post-id');
-                
-                $.ajax({
-                    type: 'POST',
-                    url: '/Home/RequestJoin',
-                    data: { postId: postId },
-                    success: function(response) {
-                        if (response.success) {
-                            alert(response.message);
-                            // Disable the button or change its state after successful request
-                            $('.request-join[data-post-id="' + postId + '"]').prop('disabled', true).text('Request Sent');
-                        } else {
-                            alert(response.message || 'Something went wrong.');
+        document.addEventListener('DOMContentLoaded', function() {
+            var requestJoinButtons = document.querySelectorAll('.request-join');
+            for (var i = 0; i < requestJoinButtons.length; i++) {
+                requestJoinButtons[i].addEventListener('click', function() {
+                    var postId = this.getAttribute('data-post-id');
+                    
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/Home/RequestJoin', true);
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState === 4) {
+                            if (xhr.status === 200) {
+                                var response = JSON.parse(xhr.responseText);
+                                if (response.success) {
+                                    alert(response.message);
+                                    var buttons = document.querySelectorAll('.request-join[data-post-id="' + postId + '"]');
+                                    for (var j = 0; j < buttons.length; j++) {
+                                        buttons[j].disabled = true;
+                                        buttons[j].textContent = 'Request Sent';
+                                    }
+                                } else {
+                                    alert(response.message || 'Something went wrong.');
+                                }
+                            } else {
+                                console.error(xhr.responseText);
+                                alert("An error occurred while sending your request.");
+                            }
                         }
-                    },
-                    error: function(xhr) {
-                        console.error(xhr.responseText);
-                        alert("An error occurred while sending your request.");
-                    }
+                    };
+                    xhr.send('postId=' + encodeURIComponent(postId));
                 });
-            });
-        });
-        $(document).ready(function() {
-            function scrollToBottomOfComments(postId) {
-                var commentSection = $('.showcomment[data-post-id="' + postId + '"]');
-                commentSection.scrollTop(commentSection[0].scrollHeight);
             }
 
-            $('.showcomment').each(function() {
-                var postId = $(this).data('post-id');
+            // Comment system functionality
+            function scrollToBottomOfComments(postId) {
+                var commentSection = document.querySelector('.showcomment[data-post-id="' + postId + '"]');
+                commentSection.scrollTop = commentSection.scrollHeight;
+            }
+
+            var commentSections = document.querySelectorAll('.showcomment');
+            for (var i = 0; i < commentSections.length; i++) {
+                var postId = commentSections[i].getAttribute('data-post-id');
                 scrollToBottomOfComments(postId);
-            });
+            }
 
-            $('.pop-comment form').on('submit', function(e) {
-                e.preventDefault();
+            var commentForms = document.querySelectorAll('.pop-comment form');
+            for (var i = 0; i < commentForms.length; i++) {
+                commentForms[i].addEventListener('submit', function(e) {
+                    e.preventDefault();
 
-                var form = $(this);
-                var actionUrl = form.attr('action');
-                var postId = form.attr('data-post-id');
-                var commentText = form.find('input[name="CommentText"]').val();
+                    var form = this;
+                    var actionUrl = form.getAttribute('action');
+                    var postId = form.getAttribute('data-post-id');
+                    var commentText = form.querySelector('input[name="CommentText"]').value;
 
-                $.ajax({
-                    type: 'POST',
-                    url: actionUrl,
-                    data: {
-                        CommentText: commentText,
-                        id: postId
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            var commentSection = $('.showcomment[data-post-id="' + postId + '"]');
-                            var noCommentsMessage = commentSection.find('.no-comments-message');
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', actionUrl, true);
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState === 4) {
+                            if (xhr.status === 200) {
+                                var response = JSON.parse(xhr.responseText);
+                                if (response.success) {
+                                    var commentSection = document.querySelector('.showcomment[data-post-id="' + postId + '"]');
+                                    var noCommentsMessage = commentSection.querySelector('.no-comments-message');
 
-                            if (noCommentsMessage.length) {
-                                noCommentsMessage.remove();
+                                    if (noCommentsMessage) {
+                                        noCommentsMessage.remove();
+                                    }
+
+                                    var newComment = document.createElement('div');
+                                    newComment.className = 'comment-post';
+                                    newComment.innerHTML = '<p class="comment-user">' + response.username + ':</p>' +
+                                                           '<p class="comment-description">' + response.comment.commentText + '</p>';
+                                    commentSection.appendChild(newComment);
+                                    form.querySelector('input[name="CommentText"]').value = '';
+                                    scrollToBottomOfComments(postId);
+
+                                    refreshComments(postId);
+                                } else {
+                                    console.error("Response not successful:", response);
+                                }
+                            } else {
+                                console.error(xhr.responseText);
+                                alert("An error occurred while submitting your comment.");
                             }
-
-                            var newComment = `
-                                <div class="comment-post">
-                                    <p class="comment-user">${response.username}:</p>
-                                    <p class="comment-description">${response.comment.commentText}</p>
-                                </div>
-                            `;
-                            commentSection.append(newComment);
-                            form.find('input[name="CommentText"]').val('');
-                            scrollToBottomOfComments(postId);
-
-                            // Refresh comments for all users
-                            refreshComments(postId);
-                        } else {
-                            console.error("Response not successful:", response);
                         }
-                    },
-                    error: function(xhr) {
-                        console.error(xhr.responseText);
-                        alert("An error occurred while submitting your comment.");
-                    }
+                    };
+                    xhr.send('CommentText=' + encodeURIComponent(commentText) + '&id=' + encodeURIComponent(postId));
                 });
-            });
+            }
 
             function refreshComments(postId) {
-                $.ajax({
-                    type: 'GET',
-                    url: `/Home/GetComments/${postId}`,  
-                    success: function(data) {
-                        var commentSection = $('.showcomment[data-post-id="' + postId + '"]');
-                        commentSection.html(data);  
-                    },
-                    error: function(xhr) {
-                        console.error("Error refreshing comments:", xhr.responseText);
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', '/Home/GetComments/' + encodeURIComponent(postId), true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                            var commentSection = document.querySelector('.showcomment[data-post-id="' + postId + '"]');
+                            commentSection.innerHTML = xhr.responseText;
+                        } else {
+                            console.error("Error refreshing comments:", xhr.responseText);
+                        }
                     }
-                });
+                };
+                xhr.send();
             }
 
             setInterval(function() {
-                $('.showcomment').each(function() {
-                    var postId = $(this).data('post-id');
+                var commentSections = document.querySelectorAll('.showcomment');
+                for (var i = 0; i < commentSections.length; i++) {
+                    var postId = commentSections[i].getAttribute('data-post-id');
                     refreshComments(postId);
-                });
-            }, 5000);  
+                }
+            }, 5000);
         });
-
     </script>
 }
+
 
 <div class="content-Comunity">
     @foreach (var myjoin in ViewBag.myjoin) {
